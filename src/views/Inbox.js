@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Inbox extends Component {
-  render() {
-    return (
+export const Inbox = () => {
+  return (
+    <React.Fragment>
       <div>Inbox</div>
-    )
-  }
+    </React.Fragment>
+  );
 }

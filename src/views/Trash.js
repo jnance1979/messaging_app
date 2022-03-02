@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Trash extends Component {
-  render() {
-    return (
+export const Trash = () => {
+  return (
+    <React.Fragment>
       <div>Trash</div>
-    )
-  }
+    </React.Fragment>
+  );
 }

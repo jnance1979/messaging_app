@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { browserLocalPersistence, getAuth, GoogleAuthProvider, onAuthStateChanged, setPersistence, signInWithPopup, signOut } from "firebase/auth";
-import { firebaseApp } from "../firebase/config";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 export const AuthContext = createContext()
@@ -56,7 +55,7 @@ export const AuthProvider = ( { children } ) => {
                 })
             }
         })
-    }, [ auth ])
+    }, [ auth, db, currentUser ])
     
 
     const values = {

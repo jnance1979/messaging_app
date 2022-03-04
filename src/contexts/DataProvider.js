@@ -1,10 +1,8 @@
 import {
-  collection,
   collectionGroup,
   getDoc,
   getDocs,
   getFirestore,
-  orderBy,
   query,
 } from "firebase/firestore";
 import { createContext, useCallback, useEffect, useState } from "react";

@@ -1,7 +1,6 @@
-import { updateCurrentUser } from "firebase/auth";
-import React, { createContext } from "react";
+import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { AuthContext, useAuth, AuthProvider } from "./contexts/AuthProvider";
+import { useAuth} from "./contexts/AuthProvider";
 import { Inbox } from "./views/Inbox";
 import { Sent } from "./views/Sent";
 import { Trash } from "./views/Trash";

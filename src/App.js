@@ -1,10 +1,24 @@
-import React from "react";
+import { updateCurrentUser } from "firebase/auth";
+import React, { createContext } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import { AuthContext, useAuth, AuthProvider } from "./contexts/AuthProvider";
 import { Inbox } from "./views/Inbox";
 import { Sent } from "./views/Sent";
 import { Trash } from "./views/Trash";
 
 export const App = () => {
+
+  const { signIn, currentUser, logOut } = useAuth()
+  
+    const handleLogin = ( e ) => {
+        e.preventDefault();
+        signIn();
+    }
+
+    const handleLogout = (e) => {
+        // e.preventDefault();
+        logOut();
+        };
   return (
    <React.Fragment>
         <header>
@@ -32,10 +46,15 @@ export const App = () => {
                   </Link>
                 </li>
               </ul>
-              {/* <form className="form-inline my-2 my-lg-0">
-                <input className="form-control mr-sm-2" type="text" placeholder="Search"/>
-                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form> */}
+              <form className="form-inline my-2 my-lg-0">
+                {
+                  !currentUser.loggedIn
+                  ?
+                <button onClick={ (e) => handleLogin(e) } className="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+               :
+               <button onClick={ (e) => handleLogout(e) } className="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                }
+              </form>
             </div>
           </nav>
         </header>
@@ -51,13 +70,3 @@ export const App = () => {
   )
 };
 
-
-
-// export default class App extends Component {
-//   componentDidMount() {}
-//   render() {
-//     return (
-     
-//     );
-//   }
-// }

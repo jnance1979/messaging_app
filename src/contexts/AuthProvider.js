@@ -55,7 +55,7 @@ export const AuthProvider = ( { children } ) => {
                 })
             }
         })
-    }, [ auth, db, currentUser ])
+    },[auth])
     
 
     const values = {

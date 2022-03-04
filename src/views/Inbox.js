@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { DataContext, DataProvider} from "../contexts/DataProvider";
+import { DataContext} from "../contexts/DataProvider";
 import moment from 'moment'
 import { useAuth } from '../contexts/AuthProvider';
 
@@ -12,8 +12,8 @@ export const Inbox = () => {
  
 
       const messages = posts.map((message) => (
-        <div>
-          <li key={message.body}> {message.body}</li>
+        <div key={message.body}>
+          <li> {message.body}</li>
           <cite>&mdash;{message.user.name}</cite>
           <span className="float-right">
             {moment(message.dateCreated.seconds).fromNow()}

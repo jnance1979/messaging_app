@@ -16,3 +16,19 @@ header {
   margin-bottom: 25px;
 
 }
+
+.messageForm {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#bodyMessage {
+  width: 50%;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

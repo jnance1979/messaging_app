@@ -1,70 +1,60 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { browserLocalPersistence, getAuth, GoogleAuthProvider, onAuthStateChanged, setPersistence, signInWithPopup, signOut } from "firebase/auth";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import {
+  browserLocalPersistence,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  setPersistence,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 
-export const AuthContext = createContext()
-
-
+export const AuthContext = createContext();
 
 export function useAuth() {
-    return useContext( AuthContext )
+  return useContext(AuthContext);
 }
 
-export const AuthProvider = ( { children } ) => {
-    
-    const [currentUser, setcurrentUser] = useState({ loggedIn: false })
-    let auth = getAuth()
-    let provider = new GoogleAuthProvider()
-    const db = getFirestore();
+export const AuthProvider = ({ children }) => {
+  const auth = getAuth();
+  let provider = new GoogleAuthProvider();
+  const [currentUser, setUser] = useState({ loggedIn: false });
 
-    function signIn() {
-        return setPersistence( auth, browserLocalPersistence )
-        .then( () => {
-            signInWithPopup( auth, provider)
-            .then( result => {
-                console.log(result)
-            })
-        })
-        .catch( err => console.error( err) )
-    }
+  function logIn(e) {
+    e.preventDefault();
+    return setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        signInWithPopup(auth, provider).then((result) => {
+          console.log(result);
+          console.log(result.user.displayName);
+        });
+      })
+      .catch((err) => console.error(err));
+  }
 
-    function logOut () {
-        signOut( auth )
-        .then( ()  => {
-            setcurrentUser({ loggedIn: false })
-            alert('User has successfully logged out.')
-
-
-        })
-    }
+  function logOut() {
+    signOut(auth).then(() => {
+      setUser({ loggedIn: false });
+      alert("User has successfully logged out.");
+    });
+  }
 
     useEffect(() => {
-        console.log( currentUser )
-        onAuthStateChanged( auth, ( user ) => {
-            if ( user ) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUser({
+            id: user.uid,
+            name: user.displayName,
+            image: user.photoURL,
+            email: user.email,
+            loggedIn: true,
+          });
+        }
+      });
+    }, [auth]);
 
-                const userRef = doc( db, 'users', user.uid )
-                setDoc( userRef, {email: user.email, name: user.displayName }, { merge: true } )
 
-                setcurrentUser({
-                    id: user.uid,
-                    name: user.displayName,
-                    image: user.photoURL,
-                    email: user.email,
-                    loggedIn: true
-                })
-            }
-        })
-    },[auth])
-    
 
-    const values = {
-        signIn, currentUser, logOut
-    };
-
-    return (
-    <AuthContext.Provider value={ values }>
-        { children }
-    </AuthContext.Provider>
-    )
-}
+  const values = { logIn, currentUser, logOut };
+  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
+};

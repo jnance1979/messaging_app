@@ -5,16 +5,16 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthProvider';
-import { DataProvider } from "./contexts/DataProvider";
+// import { DataProvider } from "./contexts/DataProvider";
 
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <DataProvider>
-          <App />
-        </DataProvider>
+        {/* <DataProvider> */}
+        <App />
+        {/* </DataProvider >*/}
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
